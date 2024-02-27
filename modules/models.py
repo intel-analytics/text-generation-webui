@@ -357,8 +357,9 @@ def bigdl_llm_loader(model_name):
 
     tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
 
-    model = BenchmarkWrapper(model)
-    print('BenchmarkWrapper applied')
+    if shared.args.run_benchmark:
+        model = BenchmarkWrapper(model)
+        print('BenchmarkWrapper applied')
 
     return model, tokenizer
 

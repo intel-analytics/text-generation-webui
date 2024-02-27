@@ -376,10 +376,10 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         print()
 
     # warm-up
-    with torch.no_grad():
-        shared.model.generate(**generate_params)
-        torch.xpu.synchronize()
-    print('done warmup')
+    if shared.args.run_benchmark:
+        with torch.no_grad():
+            shared.model.generate(**generate_params)
+            torch.xpu.synchronize()
     
     t0 = time.time()
     try:
@@ -433,9 +433,10 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         new_tokens = len(output) - (original_tokens if not shared.is_seq2seq else 0)
         print(f'Output generated in {(t1-t0):.2f} seconds ({new_tokens/(t1-t0):.2f} tokens/s, {new_tokens} tokens, context {original_tokens}, seed {seed})')
 
-        first_cost = shared.model.first_cost*1000
-        rest_cost_mean = np.mean(shared.model.last_token_time)*1000
-        print(f'latency - {first_cost:.2f}, {rest_cost_mean:.2f}, input {original_tokens}, output {new_tokens}')
+        if shared.args.run_benchmark:
+            first_cost = shared.model.first_cost*1000
+            rest_cost_mean = np.mean(shared.model.last_token_time)*1000
+            print(f'Latency 1st/2nd+: {first_cost:.2f}ms, {rest_cost_mean:.2f}ms. Input/output tokens: {original_tokens}, {new_tokens}')
         return
 
 

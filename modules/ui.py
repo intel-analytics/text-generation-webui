@@ -65,6 +65,7 @@ def list_model_elements():
         'cpu_embedding',
         #'lightweight_bmm',
         'use_cache',
+        'run_benchmark',
         'compute_dtype',
         'quant_type',
         'use_double_quant',
