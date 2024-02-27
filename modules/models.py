@@ -324,6 +324,7 @@ def AutoAWQ_loader(model_name):
 def bigdl_llm_loader(model_name):
 
     from bigdl.llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
+    from modules.benchmark_util import BenchmarkWrapper
 
     path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
 
@@ -355,6 +356,9 @@ def bigdl_llm_loader(model_name):
         model = model.to("xpu")
 
     tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
+
+    model = BenchmarkWrapper(model)
+    print('BenchmarkWrapper applied')
 
     return model, tokenizer
 

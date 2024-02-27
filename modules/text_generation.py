@@ -375,10 +375,6 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(filtered_params)
         print()
 
-    from modules.benchmark_util import BenchmarkWrapper
-    shared.model = BenchmarkWrapper(shared.model)
-    print('BenchmarkWrapper loaded')
-
     # warm-up
     with torch.no_grad():
         shared.model.generate(**generate_params)
