@@ -516,7 +516,8 @@ class BenchmarkWrapper:
         self.verbose = verbose
         self.encoder_time = 0.0
         self.first_cost = 0.0
-        self.rest_cost_mean = 0.0
+        self.last_token_time = []
+        # self.rest_cost_mean = 0.0
         self.peak_memory = 0.0
         print(self.model.__class__)
 
@@ -2763,8 +2764,10 @@ class BenchmarkWrapper:
             end = time.perf_counter()
             if first_token_time is None:
                 first_token_time = end - st
+                self.first_cost = first_token_time
             else:
                 last_token_time.append(end - st)
+                self.last_token_time = last_token_time
 
             # stop if we exceed the maximum length
             if stopping_criteria(input_ids, scores):
@@ -2778,18 +2781,18 @@ class BenchmarkWrapper:
                 print(f"=========First token cost {first_token_time:.4f} s and {memory_every_token[0]} GB=========")
             else:
                 print(f"=========First token cost {first_token_time:.4f} s=========")
-        if len(last_token_time) > 1:
-            self.first_cost = first_token_time
-            self.rest_cost_mean = np.mean(last_token_time)
-            if self.do_print:
-                if self.device.type == "xpu":
-                    print(f"=========Rest tokens cost average {self.rest_cost_mean:.4f} s ({len(last_token_time)}"
-                          f" tokens in all) and {np.max(memory_every_token[1:])} GB=========")
-                    if self.verbose:
-                        print(f"Peak memory for every token: {memory_every_token}")
-                else:
-                    print(f"=========Rest tokens cost average {self.rest_cost_mean:.4f} s ({len(last_token_time)}"
-                          f" tokens in all)=========")
+        # if len(last_token_time) > 1:
+        #     self.first_cost = first_token_time
+        #     self.rest_cost_mean = np.mean(last_token_time)
+        #     if self.do_print:
+        #         if self.device.type == "xpu":
+        #             print(f"=========Rest tokens cost average {self.rest_cost_mean:.4f} s ({len(last_token_time)}"
+        #                   f" tokens in all) and {np.max(memory_every_token[1:])} GB=========")
+        #             if self.verbose:
+        #                 print(f"Peak memory for every token: {memory_every_token}")
+        #         else:
+        #             print(f"=========Rest tokens cost average {self.rest_cost_mean:.4f} s ({len(last_token_time)}"
+        #                   f" tokens in all)=========")
 
         if streamer is not None:
             streamer.end()

@@ -375,6 +375,16 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(filtered_params)
         print()
 
+    from modules.benchmark_util import BenchmarkWrapper
+    shared.model = BenchmarkWrapper(shared.model)
+    print('BenchmarkWrapper loaded')
+
+    # warm-up
+    with torch.no_grad():
+        shared.model.generate(**generate_params)
+        torch.xpu.synchronize()
+    print('done warmup')
+    
     t0 = time.time()
     try:
         if not is_chat and not shared.is_seq2seq:
@@ -403,11 +413,6 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
             def generate_with_streaming(**kwargs):
                 return Iteratorize(generate_with_callback, [], kwargs, callback=None)
 
-            # warm-up
-            with torch.no_grad():
-                shared.model.generate(**generate_params)
-                torch.xpu.synchronize()
-
             with generate_with_streaming(**generate_params) as generator:
                 cumulative_reply = ''
                 starting_from = 0 if shared.is_seq2seq else len(input_ids[0])
@@ -431,6 +436,10 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         original_tokens = len(original_input_ids[0])
         new_tokens = len(output) - (original_tokens if not shared.is_seq2seq else 0)
         print(f'Output generated in {(t1-t0):.2f} seconds ({new_tokens/(t1-t0):.2f} tokens/s, {new_tokens} tokens, context {original_tokens}, seed {seed})')
+
+        first_cost = shared.model.first_cost*1000
+        rest_cost_mean = np.mean(shared.model.last_token_time)*1000
+        print(f'latency - {first_cost:.2f}, {rest_cost_mean:.2f}, input {original_tokens}, output {new_tokens}')
         return
 
 
