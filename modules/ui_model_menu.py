@@ -10,7 +10,7 @@ import psutil
 import torch
 from transformers import is_torch_xpu_available
 
-from modules import loaders, shared, ui, utils
+from modules import loaders, shared, ui, utils, chat
 from modules.logging_colors import logger
 from modules.models import load_model, unload_model
 from modules.models_settings import (
@@ -20,7 +20,7 @@ from modules.models_settings import (
     update_model_parameters
 )
 from modules.utils import gradio
-
+inputs = ('Chat input', 'interface_state')
 
 def create_ui():
     mu = shared.args.multi_user
@@ -151,7 +151,7 @@ def create_ui():
                             shared.gradio['gptq_for_llama_info'] = gr.Markdown('Legacy loader for compatibility with older GPUs. ExLlamav2_HF or AutoGPTQ are preferred for GPTQ models when supported.')
                             shared.gradio['exllamav2_info'] = gr.Markdown("ExLlamav2_HF is recommended over ExLlamav2 for better integration with extensions and more consistent sampling behavior across loaders.")
                             shared.gradio['llamacpp_HF_info'] = gr.Markdown('llamacpp_HF loads llama.cpp as a Transformers model. To use it, you need to download a tokenizer.\n\nOption 1 (recommended): place your .gguf in a subfolder of models/ along with these 4 files: special_tokens_map.json, tokenizer_config.json, tokenizer.json, tokenizer.model.\n\nOption 2: download `oobabooga/llama-tokenizer` under "Download model or LoRA". That\'s a default Llama tokenizer that will work for some (but not all) models.')
-
+                            shared.gradio['default_warmup'] = gr.Textbox(label='warmup', value="Hello", visible=False)
             with gr.Column():
                 with gr.Row():
                     shared.gradio['autoload_model'] = gr.Checkbox(value=shared.settings['autoload_model'], label='Autoload the model', info='Whether to load the model as soon as it is selected in the Model dropdown.', interactive=not mu)
@@ -188,7 +188,11 @@ def create_event_handlers():
         update_model_parameters, gradio('interface_state'), None).then(
         partial(load_model_wrapper, autoload=True), gradio('model_menu', 'loader'), gradio('model_status'), show_progress=False).success(
         update_truncation_length, gradio('truncation_length', 'interface_state'), gradio('truncation_length')).then(
-        lambda x: x, gradio('loader'), gradio('filter_by_loader'))
+        lambda x: x, gradio('loader'), gradio('filter_by_loader')).then(
+        lambda x: x, gradio('default_warmup'), gradio('Chat input')).then(
+        chat.generate_chat_reply_wrapper, gradio(inputs), None, show_progress=False).success(
+        warmup_done, None, gradio('model_status'))
+
 
     shared.gradio['reload_model'].click(
         unload_model, None, None).then(
@@ -211,6 +215,8 @@ def create_event_handlers():
     shared.gradio['get_file_list'].click(partial(download_model_wrapper, return_links=True), gradio('custom_model_menu', 'download_specific_file'), gradio('model_status'), show_progress=True)
     shared.gradio['autoload_model'].change(lambda x: gr.update(visible=not x), gradio('autoload_model'), gradio('load_model'))
 
+def warmup_done():
+    yield "Warmup finished!\n\nYou can start your chat by clicking the chat tab."
 
 def load_model_wrapper(selected_model, loader, autoload=False):
     if not autoload:
