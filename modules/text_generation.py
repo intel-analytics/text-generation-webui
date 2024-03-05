@@ -142,8 +142,10 @@ def encode(prompt, add_special_tokens=True, add_bos_token=True, truncation_lengt
     elif torch.backends.mps.is_available():
         device = torch.device('mps')
         return input_ids.to(device)
-    elif is_torch_xpu_available():
-        return input_ids.to("xpu:0")
+    elif shared.args.device == "CPU":
+        return input_ids
+    elif is_torch_xpu_available() or shared.args.device == "GPU":
+        return input_ids.to("xpu")
     else:
         return input_ids.cuda()
 
@@ -276,7 +278,7 @@ def get_reply_from_output_ids(output_ids, state=None, starting_from=0):
     if (hasattr(shared.tokenizer, 'convert_ids_to_tokens') and len(output_ids) > starting_from) and not reply.startswith(' '):
         first_token = shared.tokenizer.convert_ids_to_tokens(int(output_ids[starting_from]))
         if isinstance(first_token, (bytes,)):
-            first_token = first_token.decode('utf8')
+            first_token = first_token.decode('utf8', errors='ignore')
 
         if first_token.startswith('▁'):
             reply = ' ' + reply
@@ -335,10 +337,19 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         generate_params.update({'inputs_embeds': inputs_embeds})
 
     # Stopping criteria / eos token
+    generate_params['stopping_criteria'] = transformers.StoppingCriteriaList()
     eos_token_ids = [shared.tokenizer.eos_token_id] if shared.tokenizer.eos_token_id is not None else []
     generate_params['eos_token_id'] = eos_token_ids
-    generate_params['stopping_criteria'] = transformers.StoppingCriteriaList()
-    generate_params['stopping_criteria'].append(_StopEverythingStoppingCriteria())
+
+    if shared.model.config.model_type == "qwen":
+        stopping_words = ["<|endoftext|>", "<|im_end|>", "<|im_start|>"]
+        generate_params['stopping_criteria'].append(StopWordsCriteria(stopping_words, shared.tokenizer))
+
+    for st in state['custom_stopping_strings']:
+        if type(st) is str:
+            stopping_words = [item.strip().strip('"') for item in [state['custom_stopping_strings']][0].split(',')]
+            generate_params['stopping_criteria'].append(StopWordsCriteria(stopping_words, shared.tokenizer))
+
 
     # Logits processor
     processor = state.get('logits_processor', LogitsProcessorList([]))
@@ -391,6 +402,11 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
 
             def generate_with_streaming(**kwargs):
                 return Iteratorize(generate_with_callback, [], kwargs, callback=None)
+
+            # warm-up
+            with torch.no_grad():
+                shared.model.generate(**generate_params)
+                torch.xpu.synchronize()
 
             with generate_with_streaming(**generate_params) as generator:
                 cumulative_reply = ''

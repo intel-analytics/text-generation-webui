@@ -109,6 +109,17 @@ def create_ui():
 
                             shared.gradio['autogptq_info'] = gr.Markdown('ExLlamav2_HF is recommended over AutoGPTQ for models derived from Llama.')
                             shared.gradio['quipsharp_info'] = gr.Markdown('QuIP# has to be installed manually at the moment.')
+                            shared.gradio['device'] = gr.Dropdown(label="device", choices=["CPU", "GPU"], value=shared.args.device)
+                            shared.gradio['load_in_4bit'] = gr.Checkbox(label="load-in-4bit",
+                                                                        value=shared.args.load_in_4bit,
+                                                                        info="Load linear's weights to symmetric int 4.\n\nTo enable this option, start the web UI with the --load-in-4bit flag.",
+                                                                        interactive=shared.args.load_in_4bit)
+                            shared.gradio['load_in_low_bit'] = gr.Dropdown(label="load-in-low-bit",
+                                                                           choices=["sym_int4", "asym_int4", "sym_int5", "asym_int5", "sym_int8",
+                                                                                    "nf3", "nf4", "fp4", "fp8", "fp8_e4m3", "fp8_e5m2", "fp16", "bf16"],
+                                                                           value=shared.args.load_in_low_bit,
+                                                                           info='Apply relevant low bit optimizations to the model.\n\nTo enable this option, start the web UI with the --load-in-low-bit flag.',
+                                                                           interactive=shared.args.load_in_4bit is False)
 
                         with gr.Column():
                             shared.gradio['load_in_8bit'] = gr.Checkbox(label="load-in-8bit", value=shared.args.load_in_8bit)
@@ -131,6 +142,18 @@ def create_ui():
                             shared.gradio['numa'] = gr.Checkbox(label="numa", value=shared.args.numa, info='NUMA support can help on some systems with non-uniform memory access.')
                             shared.gradio['disk'] = gr.Checkbox(label="disk", value=shared.args.disk)
                             shared.gradio['bf16'] = gr.Checkbox(label="bf16", value=shared.args.bf16)
+                            shared.gradio['optimize_model'] = gr.Checkbox(label="optimize-model", value=shared.args.optimize_model, info="Enable this option to further optimize the low-bit llm model.")
+                            shared.gradio['cpu_embedding'] = gr.Checkbox(label="cpu-embedding", value=shared.args.cpu_embedding, info="Whether to replace the Embedding layer.")
+                            shared.gradio['use_double_quant'] = gr.Checkbox(label="use_double_quant", value=shared.args.use_double_quant)
+                            shared.gradio['tensor_split'] = gr.Textbox(label='tensor_split', info='Split the model across multiple GPUs, comma-separated list of proportions, e.g. 18,17')
+                            shared.gradio['trust_remote_code'] = gr.Checkbox(label="trust-remote-code", value=shared.args.trust_remote_code, info='To enable this option, start the web UI with the --trust-remote-code flag. It is necessary for some models.')
+                            shared.gradio['use_cache'] = gr.Checkbox(label="use-cache", value=shared.args.use_cache, info="Wether to use past_key_values to speed up model decoding.")
+                            shared.gradio['cfg_cache'] = gr.Checkbox(label="cfg-cache", value=shared.args.cfg_cache, info='Create an additional cache for CFG negative prompts.')
+                            shared.gradio['logits_all'] = gr.Checkbox(label="logits_all", value=shared.args.logits_all, info='Needs to be set for perplexity evaluation to work. Otherwise, ignore it, as it makes prompt processing slower.')
+                            shared.gradio['use_flash_attention_2'] = gr.Checkbox(label="use_flash_attention_2", value=shared.args.use_flash_attention_2, info='Set use_flash_attention_2=True while loading the model.')
+                            shared.gradio['disable_exllama'] = gr.Checkbox(label="disable_exllama", value=shared.args.disable_exllama, info='Disable ExLlama kernel.')
+                            shared.gradio['disable_exllamav2'] = gr.Checkbox(label="disable_exllamav2", value=shared.args.disable_exllamav2, info='Disable ExLlamav2 kernel.')
+                            shared.gradio['no_flash_attn'] = gr.Checkbox(label="no_flash_attn", value=shared.args.no_flash_attn, info='Force flash-attention to not be used.')
                             shared.gradio['cache_8bit'] = gr.Checkbox(label="cache_8bit", value=shared.args.cache_8bit, info='Use 8-bit cache to save VRAM.')
                             shared.gradio['autosplit'] = gr.Checkbox(label="autosplit", value=shared.args.autosplit, info='Automatically split the model tensors across the available GPUs.')
                             shared.gradio['no_flash_attn'] = gr.Checkbox(label="no_flash_attn", value=shared.args.no_flash_attn, info='Force flash-attention to not be used.')

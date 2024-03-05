@@ -164,7 +164,7 @@ def infer_loader(model_name, model_settings):
     elif re.match(r'.*-hqq', model_name.lower()):
         return 'HQQ'
     else:
-        loader = 'Transformers'
+        loader = 'BigDL-LLM'
 
     return loader
 
