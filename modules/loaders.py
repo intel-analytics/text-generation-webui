@@ -115,8 +115,8 @@ loaders_and_params = OrderedDict({
         'autogptq_info',
     ],
     'BigDL-LLM': [
-        'load_in_4bit',
-        'load_in_low_bit',
+        'bigdl_load_in_4bit',
+        'bigdl_load_in_low_bit',
         'optimize_model',
         'cpu_embedding',
         'trust_remote_code',

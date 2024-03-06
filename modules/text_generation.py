@@ -16,7 +16,8 @@ import modules.shared as shared
 from modules.callbacks import (
     Iteratorize,
     Stream,
-    _StopEverythingStoppingCriteria
+    _StopEverythingStoppingCriteria,
+    StopWordsCriteria
 )
 from modules.extensions import apply_extensions
 from modules.grammar.grammar_utils import initialize_grammar
