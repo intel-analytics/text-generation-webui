@@ -109,6 +109,16 @@ def create_ui():
 
                             shared.gradio['autogptq_info'] = gr.Markdown('ExLlamav2_HF is recommended over AutoGPTQ for models derived from Llama.')
                             shared.gradio['quipsharp_info'] = gr.Markdown('QuIP# has to be installed manually at the moment.')
+                            shared.gradio['bigdl_load_in_4bit'] = gr.Checkbox(label="load-in-4bit",
+                                                                        value=shared.args.load_in_4bit,
+                                                                        info="Load linear's weights to symmetric int 4.\n\nTo enable this option, start the web UI with the --load-in-4bit flag.",
+                                                                        interactive=shared.args.load_in_4bit)
+                            shared.gradio['bigdl_load_in_low_bit'] = gr.Dropdown(label="load-in-low-bit",
+                                                                           choices=["sym_int4", "asym_int4", "sym_int5", "asym_int5", "sym_int8",
+                                                                                    "nf3", "nf4", "fp4", "fp8", "fp8_e4m3", "fp8_e5m2", "fp16", "bf16"],
+                                                                           value=shared.args.load_in_low_bit,
+                                                                           info='Apply relevant low bit optimizations to the model.\n\nTo enable this option, start the web UI with the --load-in-low-bit flag.',
+                                                                           interactive=shared.args.load_in_4bit is False)
 
                         with gr.Column():
                             shared.gradio['load_in_8bit'] = gr.Checkbox(label="load-in-8bit", value=shared.args.load_in_8bit)
@@ -146,7 +156,10 @@ def create_ui():
                             shared.gradio['gptq_for_llama_info'] = gr.Markdown('Legacy loader for compatibility with older GPUs. ExLlamav2_HF or AutoGPTQ are preferred for GPTQ models when supported.')
                             shared.gradio['exllamav2_info'] = gr.Markdown("ExLlamav2_HF is recommended over ExLlamav2 for better integration with extensions and more consistent sampling behavior across loaders.")
                             shared.gradio['llamacpp_HF_info'] = gr.Markdown("llamacpp_HF loads llama.cpp as a Transformers model. To use it, you need to place your GGUF in a subfolder of models/ with the necessary tokenizer files.\n\nYou can use the \"llamacpp_HF creator\" menu to do that automatically.")
-
+                            shared.gradio['optimize_model'] = gr.Checkbox(label="optimize-model", value=shared.args.optimize_model, info="Enable this option to further optimize the low-bit llm model.")
+                            shared.gradio['cpu_embedding'] = gr.Checkbox(label="cpu-embedding", value=shared.args.cpu_embedding, info="Whether to replace the Embedding layer.")
+                            shared.gradio['use_cache'] = gr.Checkbox(label="use-cache", value=shared.args.use_cache, info="Wether to use past_key_values to speed up model decoding.")
+                            
             with gr.Column():
                 with gr.Row():
                     shared.gradio['autoload_model'] = gr.Checkbox(value=shared.settings['autoload_model'], label='Autoload the model', info='Whether to load the model as soon as it is selected in the Model dropdown.', interactive=not mu)

@@ -164,6 +164,18 @@ group.add_argument('--monkey-patch', action='store_true', help='Apply the monkey
 group = parser.add_argument_group('HQQ')
 group.add_argument('--hqq-backend', type=str, default='PYTORCH_COMPILE', help='Backend for the HQQ loader. Valid options: PYTORCH, PYTORCH_COMPILE, ATEN.')
 
+# BigDL-LLM
+group = parser.add_argument_group('BigDL-LLM')
+group.add_argument('--load-in-4bit', action='store_true', default=False, help='boolean value, True means loading linear’s weight to symmetric int 4 if'\
+                   'the model is a regular fp16/bf16/fp32 model, and to asymmetric int 4 if the model is GPTQ model.Default to be False')
+group.add_argument('--load-in-low-bit', type=str, default=None, help='str value, options are sym_int4, asym_int4, sym_int5, asym_int5'\
+                   ', sym_int8, nf3, nf4, fp4, fp8, fp8_e4m3, fp8_e5m2, fp16 or bf16. sym_int4 means symmetric int 4, asym_int4 means asymmetric int 4,'\
+                   'nf4 means 4-bit NormalFloat, etc. Relevant low bit optimizations will be applied to the model.')
+group.add_argument('--optimize-model', action='store_true', default=True, help='boolean value, Whether to further optimize the low_bit llm model.')
+group.add_argument('--cpu-embedding', action='store_true', default=True, help='Whether to replace the Embedding layer, may need to set it to `True` when running BigDL-LLM on GPU on Windows. Default to be `False`')
+group.add_argument('--use-cache', action='store_true', default=True, help='If use_cache is True, past key values are used to speed up decoding if applicable to model.')
+group.add_argument('--trust-remote-code', action='store_true', default=True, help='Set trust_remote_code=True while loading the model. Necessary for some models.')
+
 # DeepSpeed
 group = parser.add_argument_group('DeepSpeed')
 group.add_argument('--deepspeed', action='store_true', help='Enable the use of DeepSpeed ZeRO-3 for inference via the Transformers integration.')
@@ -264,6 +276,8 @@ def fix_loader_name(name):
         return 'QuIP#'
     elif name in ['hqq']:
         return 'HQQ'
+    elif name in ['BigDL-LLM', 'bigdl-llm', 'bigdl']:
+        return 'BigDL-LLM'
 
 
 def add_extension(name, last=False):
