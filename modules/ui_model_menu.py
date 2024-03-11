@@ -157,7 +157,6 @@ def create_ui():
                             shared.gradio['exllamav2_info'] = gr.Markdown("ExLlamav2_HF is recommended over ExLlamav2 for better integration with extensions and more consistent sampling behavior across loaders.")
                             shared.gradio['llamacpp_HF_info'] = gr.Markdown("llamacpp_HF loads llama.cpp as a Transformers model. To use it, you need to place your GGUF in a subfolder of models/ with the necessary tokenizer files.\n\nYou can use the \"llamacpp_HF creator\" menu to do that automatically.")
                             shared.gradio['optimize_model'] = gr.Checkbox(label="optimize-model", value=shared.args.optimize_model, info="Enable this option to further optimize the low-bit llm model.")
-                            shared.gradio['cpu_embedding'] = gr.Checkbox(label="cpu-embedding", value=shared.args.cpu_embedding, info="Whether to replace the Embedding layer.")
                             shared.gradio['use_cache'] = gr.Checkbox(label="use-cache", value=shared.args.use_cache, info="Wether to use past_key_values to speed up model decoding.")
                             
             with gr.Column():

@@ -156,7 +156,6 @@ loaders_and_params = OrderedDict({
         'bigdl_load_in_4bit',
         'bigdl_load_in_low_bit',
         'optimize_model',
-        'cpu_embedding',
         'trust_remote_code',
         'use_cache',
     ]

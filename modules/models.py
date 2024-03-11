@@ -414,7 +414,6 @@ def bigdl_llm_loader(model_name):
                 load_in_4bit=shared.args.load_in_4bit,
                 load_in_low_bit=shared.args.load_in_low_bit,
                 optimize_model=shared.args.optimize_model,
-                cpu_embedding=shared.args.cpu_embedding,
                 trust_remote_code=shared.args.trust_remote_code,
                 use_cache=shared.args.use_cache,
                 )

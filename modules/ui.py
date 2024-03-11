@@ -100,7 +100,6 @@ def list_model_elements():
         'bigdl_load_in_4bit',
         'bigdl_load_in_low_bit',
         'optimize_model',
-        'cpu_embedding',
         'use_cache',
     ]
     if is_torch_xpu_available():
