@@ -110,7 +110,7 @@ loaders_and_params = OrderedDict({
         'no_use_fast',
         'autogptq_info',
     ],
-    'BigDL-LLM': [
+    'IPEX-LLM': [
         'load_in_4bit',
         'load_in_low_bit',
         'optimize_model',
@@ -210,7 +210,7 @@ loaders_samplers = {
     'AutoAWQ': transformers_samplers(),
     'QuIP#': transformers_samplers(),
     'HQQ': transformers_samplers(),
-    'BigDL-LLM': transformers_samplers(),
+    'IPEX-LLM': transformers_samplers(),
     'ExLlamav2': {
         'temperature',
         'top_p',

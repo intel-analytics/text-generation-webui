@@ -1,4 +1,4 @@
-***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [BigDL-LLM](https://github.com/intel-analytics/bigdl).***
+***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [IPEX-LLM](https://github.com/intel-analytics/bigdl).***
 
 ## Quick Start
 To get started, please see the step-by-step [quickstart](https://bigdl.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html).
@@ -10,19 +10,19 @@ For more information, see the user guide below.
 
 ### 1. Download and Unzip WebUI
 
-Before starting all the steps, you need to download and unzip the text-generation-webui based on `BigDL-LLM` optimizations.
+Before starting all the steps, you need to download and unzip the text-generation-webui based on `IPEX-LLM` optimizations.
 
 ```bash
-https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/bigdl-llm.zip
+https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/IPEX-LLM.zip
 ```
 
 ### 2. Prepare the Environment on Windows
 
 Please use a python environment management tool (we recommend using Conda) to create a python enviroment and install necessary libs.
 
-#### 2.1 Install BigDL-LLM
+#### 2.1 Install IPEX-LLM
 
-Please see [BigDL-LLm Installation on Windows](https://bigdl.readthedocs.io/en/latest/doc/LLM/Overview/install_gpu.html#windows) for more details to install BigDL-LLM on your Client.
+Please see [IPEX-LLM Installation on Windows](https://bigdl.readthedocs.io/en/latest/doc/LLM/Overview/install_gpu.html#windows) for more details to install IPEX-LLM on your Client.
 
 #### 2.2 Install Other Required Dependencies
 
@@ -77,8 +77,8 @@ After completing the two steps above, you may click the `Model` button to select
 ![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image1.png)
 
 
-#### 4.2 Enable BigDL-LLM Optimizations
-Text-Generation-WebUI supports multiple backends, including `BigDL-LLM`, `Transformers`, `llama.cpp`, etc (the default backend is `BigDL-LLM`). You may select the BigDL-LLM backend as below to enable low-bit optimizations.
+#### 4.2 Enable IPEX-LLM Optimizations
+Text-Generation-WebUI supports multiple backends, including `IPEX-LLM`, `Transformers`, `llama.cpp`, etc (the default backend is `IPEX-LLM`). You may select the IPEX-LLM backend as below to enable low-bit optimizations.
 
 
 Then please select the device according to your device (the default device is `GPU`).
@@ -88,7 +88,7 @@ Then please select the device according to your device (the default device is `G
 
 #### 4.3 Load Model in Low Precision 
 
-One common use case of BigDL-LLM is to load a Hugging Face transformers model in low precision.
+One common use case of IPEX-LLM is to load a Hugging Face transformers model in low precision.
 
 Notes:
 
@@ -99,14 +99,14 @@ Notes:
 -  Please select the `optimize-model` and `use_cache` options to accelerate the model.
 
 
-Now you may click the `Load` button to load the model with BigDL-LLM optimizations.
+Now you may click the `Load` button to load the model with IPEX-LLM optimizations.
 
 ![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image3.png)
 
 
 ##### 4.4 Run the Model on WebUI
 
-After completing the steps of model preparation, enabling BigDL-LLM optimizations, and loading model, you may need to sepecify parameters in the `Parameters tab` according to the needs of your task.
+After completing the steps of model preparation, enabling IPEX-LLM optimizations, and loading model, you may need to sepecify parameters in the `Parameters tab` according to the needs of your task.
 
 Notes:
 * `max_new_tokens`: Maximum number of tokens to generate.
@@ -115,7 +115,7 @@ Notes:
 
 * Please see [Parameters-Tab Wiki](https://github.com/oobabooga/text-generation-webui/wiki/03-%E2%80%90-Parameters-Tab) for more details.
 
-Now you may do model inference on Text-Generation-WebUI with BigDL-LLM optimizations, including `Chat`, `Default` and `Notebook` Tabs.
+Now you may do model inference on Text-Generation-WebUI with IPEX-LLM optimizations, including `Chat`, `Default` and `Notebook` Tabs.
 
 ##### 4.4.1 Chat Tab
 
