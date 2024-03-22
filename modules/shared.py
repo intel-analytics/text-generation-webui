@@ -274,7 +274,7 @@ def fix_loader_name(name):
         return 'QuIP#'
     elif name in ['hqq']:
         return 'HQQ'
-    elif name in ['IPEX-LLM', 'IPEX-LLM', 'bigdl']:
+    elif name in ['IPEX-LLM', 'ipex-llm']:
         return 'IPEX-LLM'
 
 
