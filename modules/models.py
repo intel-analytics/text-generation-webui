@@ -60,7 +60,7 @@ def load_model(model_name, loader=None):
     shared.is_seq2seq = False
     shared.model_name = model_name
     load_func_map = {
-        'BigDL-LLM': bigdl_llm_loader,
+        'IPEX-LLM': bigdl_llm_loader,
         'Transformers': huggingface_loader,
         'AutoGPTQ': AutoGPTQ_loader,
         'GPTQ-for-LLaMa': GPTQ_loader,
