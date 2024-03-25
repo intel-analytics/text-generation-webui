@@ -1,4 +1,4 @@
-***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [IPEX-LLM](https://github.com/intel-analytics/bigdl).***
+***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [IPEX-LLM](https://github.com/intel-analytics/ipex-llm).***
 
 ## Quick Start
 To get started, please see the step-by-step [quickstart](https://bigdl.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html).
