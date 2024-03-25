@@ -13,7 +13,7 @@ For more information, see the user guide below.
 Before starting all the steps, you need to download and unzip the text-generation-webui based on `IPEX-LLM` optimizations.
 
 ```bash
-https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/bigdl-llm.zip
+https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/ipex-llm.zip
 ```
 
 ### 2. Prepare the Environment on Windows
@@ -99,14 +99,10 @@ Notes:
 -  Please select the `optimize-model` and `use_cache` options to accelerate the model.
 
 
-Now you may click the `Load` button to load the model with IPEX-LLM optimizations.
+Now you may click the `Load` button to load the model with IPEX-LLM optimizations. If everything goes well, you will get a message as shown below.
 
 ![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image3.png)
 
-After the model is loaded, a warm-up process is started in the background. 
-After warm-up is completed, a `Warmup finished!` message is shown.
-
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image3b.png)
 
 ##### 4.4 Run the Model on WebUI
 
