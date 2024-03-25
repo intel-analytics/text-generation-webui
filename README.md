@@ -103,6 +103,10 @@ Now you may click the `Load` button to load the model with IPEX-LLM optimization
 
 ![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image3.png)
 
+After the model is loaded, a warm-up process is started in the background. 
+After warm-up is completed, a `Warmup finished!` message is shown.
+
+![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image3b.png)
 
 ##### 4.4 Run the Model on WebUI
 
