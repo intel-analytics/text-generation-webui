@@ -13,7 +13,7 @@ For more information, see the user guide below.
 Before starting all the steps, you need to download and unzip the text-generation-webui based on `IPEX-LLM` optimizations.
 
 ```bash
-https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/IPEX-LLM.zip
+https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/bigdl-llm.zip
 ```
 
 ### 2. Prepare the Environment on Windows
