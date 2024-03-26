@@ -164,8 +164,8 @@ group.add_argument('--monkey-patch', action='store_true', help='Apply the monkey
 group = parser.add_argument_group('HQQ')
 group.add_argument('--hqq-backend', type=str, default='PYTORCH_COMPILE', help='Backend for the HQQ loader. Valid options: PYTORCH, PYTORCH_COMPILE, ATEN.')
 
-# BigDL-LLM
-group = parser.add_argument_group('BigDL-LLM')
+# IPEX-LLM
+group = parser.add_argument_group('IPEX-LLM')
 group.add_argument('--load-in-4bit', action='store_true', default=False, help='boolean value, True means loading linear’s weight to symmetric int 4 if'\
                    'the model is a regular fp16/bf16/fp32 model, and to asymmetric int 4 if the model is GPTQ model.Default to be False')
 group.add_argument('--load-in-low-bit', type=str, default=None, help='str value, options are sym_int4, asym_int4, sym_int5, asym_int5'\
@@ -275,8 +275,8 @@ def fix_loader_name(name):
         return 'QuIP#'
     elif name in ['hqq']:
         return 'HQQ'
-    elif name in ['BigDL-LLM', 'bigdl-llm', 'bigdl']:
-        return 'BigDL-LLM'
+    elif name in ['IPEX-LLM', 'ipex-llm']:
+        return 'IPEX-LLM'
 
 
 def add_extension(name, last=False):

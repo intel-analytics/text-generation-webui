@@ -109,11 +109,11 @@ def create_ui():
 
                             shared.gradio['autogptq_info'] = gr.Markdown('ExLlamav2_HF is recommended over AutoGPTQ for models derived from Llama.')
                             shared.gradio['quipsharp_info'] = gr.Markdown('QuIP# has to be installed manually at the moment.')
-                            shared.gradio['bigdl_load_in_4bit'] = gr.Checkbox(label="load-in-4bit",
+                            shared.gradio['ipex_llm_load_in_4bit'] = gr.Checkbox(label="load-in-4bit",
                                                                         value=shared.args.load_in_4bit,
                                                                         info="Load linear's weights to symmetric int 4.\n\nTo enable this option, start the web UI with the --load-in-4bit flag.",
                                                                         interactive=shared.args.load_in_4bit)
-                            shared.gradio['bigdl_load_in_low_bit'] = gr.Dropdown(label="load-in-low-bit",
+                            shared.gradio['ipex_llm_load_in_low_bit'] = gr.Dropdown(label="load-in-low-bit",
                                                                            choices=["sym_int4", "asym_int4", "sym_int5", "asym_int5", "sym_int8",
                                                                                     "nf3", "nf4", "fp4", "fp8", "fp8_e4m3", "fp8_e5m2", "fp16", "bf16"],
                                                                            value=shared.args.load_in_low_bit,

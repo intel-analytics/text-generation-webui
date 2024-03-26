@@ -97,8 +97,8 @@ def list_model_elements():
         'row_split',
         'tensorcores',
         'hqq_backend',
-        'bigdl_load_in_4bit',
-        'bigdl_load_in_low_bit',
+        'ipex_llm_load_in_4bit',
+        'ipex_llm_load_in_low_bit',
         'optimize_model',
         'use_cache',
     ]
