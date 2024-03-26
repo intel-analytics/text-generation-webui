@@ -315,6 +315,14 @@ List of command-line flags
 |-------------|-------------|
 | `--hqq-backend` | Backend for the HQQ loader. Valid options: PYTORCH, PYTORCH_COMPILE, ATEN. |
 
+#### IPEX-LLM
+
+| Flag                                  | Description |
+|---------------------------------------|-------------|
+| `--load-in-4bit`   | Load the model with symmetric int4 precision. This option is mutually exclusive with `--load-in-low-bit`. |
+| `--load-in-low-bit PRECISION` | Load the model with specified precision. Supported options are sym_int4, asym_int4, sym_int5, asym_int5, sym_int8, nf3, nf4, fp4, fp8, fp8_e4m3, fp8_e5m2, fp16, and bf16. This option is mutually exclusive with `--load-in-4bit`.|
+
+
 #### DeepSpeed
 
 | Flag                                  | Description |

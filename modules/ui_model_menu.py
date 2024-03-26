@@ -111,13 +111,13 @@ def create_ui():
                             shared.gradio['quipsharp_info'] = gr.Markdown('QuIP# has to be installed manually at the moment.')
                             shared.gradio['ipex_llm_load_in_4bit'] = gr.Checkbox(label="load-in-4bit",
                                                                         value=shared.args.load_in_4bit,
-                                                                        info="Load linear's weights to symmetric int 4.\n\nTo enable this option, start the web UI with the --load-in-4bit flag.",
+                                                                        info="Load the model with symmetric int4 precision.\n\nTo enable this option, start the web UI with the --load-in-4bit flag.",
                                                                         interactive=shared.args.load_in_4bit)
                             shared.gradio['ipex_llm_load_in_low_bit'] = gr.Dropdown(label="load-in-low-bit",
                                                                            choices=["sym_int4", "asym_int4", "sym_int5", "asym_int5", "sym_int8",
                                                                                     "nf3", "nf4", "fp4", "fp8", "fp8_e4m3", "fp8_e5m2", "fp16", "bf16"],
                                                                            value=shared.args.load_in_low_bit,
-                                                                           info='Apply relevant low bit optimizations to the model.\n\nTo enable this option, start the web UI with the --load-in-low-bit flag.',
+                                                                           info='Load the model with specified precision.\n\nTo enable this option, start the web UI with the --load-in-low-bit flag.',
                                                                            interactive=shared.args.load_in_4bit is False)
 
                         with gr.Column():
