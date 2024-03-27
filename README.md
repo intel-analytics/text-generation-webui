@@ -1,9 +1,9 @@
 ***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [IPEX-LLM](https://github.com/intel-analytics/ipex-llm).***
 
 ## Quick Start
-To get started, please see the step-by-step [quickstart](https://bigdl.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html).
+To get started, please see the step-by-step [quickstart](https://ipex-llm.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html).
 
-[<img src="https://llm-assets.readthedocs.io/en/latest/_images/webui_quickstart_chat.png" height="480px">](https://bigdl.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html)
+[<img src="https://llm-assets.readthedocs.io/en/latest/_images/webui_quickstart_chat.png" height="480px">](https://ipex-llm.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html)
 
 ## User Guide
 For more information, see the user guide below.
@@ -22,7 +22,7 @@ Please use a python environment management tool (we recommend using Conda) to cr
 
 #### 2.1 Install IPEX-LLM
 
-Please see [IPEX-LLM Installation on Windows](https://bigdl.readthedocs.io/en/latest/doc/LLM/Overview/install_gpu.html#windows) for more details to install IPEX-LLM on your Client.
+Please see [IPEX-LLM Installation on Windows](https://ipex-llm.readthedocs.io/en/latest/doc/LLM/Overview/install_gpu.html#windows) for more details to install IPEX-LLM on your Client.
 
 #### 2.2 Install Other Required Dependencies
 
