@@ -169,6 +169,7 @@ group.add_argument('--cpu-embedding', action='store_true', default=True, help='W
 #group.add_argument('--lightweight-bmm', action='store_true', help='Whether to replace the torch.bmm ops, may need to set it to `True` when running BigDL-LLM on GPU on Windows.')
 group.add_argument('--use-cache', action='store_true', default=True, help='If use_cache is True, past key values are used to speed up decoding if applicable to model.')
 group.add_argument('--trust-remote-code', action='store_true', default=True, help='Set trust_remote_code=True while loading the model. Necessary for some models.')
+group.add_argument('--run-benchmark', action='store_true', default=False, help='Set run-benchmark to run model warm up and generate benchmark output.')
 
 # HQQ
 group = parser.add_argument_group('HQQ')

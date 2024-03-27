@@ -139,6 +139,7 @@ def create_ui():
                             #shared.gradio['lightweight_bmm'] = gr.Checkbox(label="lightweight-bmm", value=shared.args.lightweight_bmm, info="Whether to replace the torch.bmm ops.")
                             shared.gradio['trust_remote_code'] = gr.Checkbox(label="trust-remote-code", value=shared.args.trust_remote_code, info='To enable this option, start the web UI with the --trust-remote-code flag. It is necessary for some models.')
                             shared.gradio['use_cache'] = gr.Checkbox(label="use-cache", value=shared.args.use_cache, info="Wether to use past_key_values to speed up model decoding.")
+                            shared.gradio['run_benchmark'] = gr.Checkbox(label="run-benchmark", value=shared.args.run_benchmark, info='Enable this option to run model warm up and generate benchmark output.')
                             shared.gradio['cfg_cache'] = gr.Checkbox(label="cfg-cache", value=shared.args.cfg_cache, info='Create an additional cache for CFG negative prompts.')
                             shared.gradio['logits_all'] = gr.Checkbox(label="logits_all", value=shared.args.logits_all, info='Needs to be set for perplexity evaluation to work. Otherwise, ignore it, as it makes prompt processing slower.')
                             shared.gradio['use_flash_attention_2'] = gr.Checkbox(label="use_flash_attention_2", value=shared.args.use_flash_attention_2, info='Set use_flash_attention_2=True while loading the model.')
