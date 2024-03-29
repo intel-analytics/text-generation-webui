@@ -352,7 +352,7 @@ def bigdl_llm_loader(model_name):
 
     if shared.args.device == "GPU":
         import intel_extension_for_pytorch
-        model = model.to("xpu")
+        model = model.half().to("xpu")
 
     tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
 
