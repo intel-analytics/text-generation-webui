@@ -171,7 +171,7 @@ group.add_argument('--load-in-4bit', action='store_true', default=False, help='b
 group.add_argument('--load-in-low-bit', type=str, default=None, help='str value, the low-bit precision to load the model to. Options are sym_int4, fp4, fp8, asym_int4, sym_int5, asym_int5'
                    ', sym_int8, nf3, nf4, fp8_e4m3, fp16 or bf16. sym_int4 means symmetric int4, asym_int4 means asymmetric int4,'
                    'fp8 means 8-bit floating point, nf4 means 4-bit NormalFloat, etc.')
-group.add_argument('--optimize-model', action='store_true', default=True, help='boolean value, Whether to further optimize the low_bit model with ipex-llm.')
+group.add_argument('--optimize-model', action='store_true', default=True, help='boolean value, Whether to further optimize the low-bit model with ipex-llm.')
 group.add_argument('--use-cache', action='store_true', default=True, help='If use_cache is True, past key values are used to speed up decoding if applicable to model.')
 group.add_argument('--trust-remote-code', action='store_true', default=True, help='Set trust_remote_code=True while loading the model. Necessary for some models.')
 
