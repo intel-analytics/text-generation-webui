@@ -392,6 +392,7 @@ def HQQ_loader(model_name):
     HQQLinear.set_backend(getattr(HQQBackend, shared.args.hqq_backend))
     return model
 
+
 def ipex_llm_loader(model_name):
 
     from ipex_llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
@@ -410,17 +411,17 @@ def ipex_llm_loader(model_name):
             LoaderClass = AutoModelForCausalLM
 
     model = LoaderClass.from_pretrained(
-                path_to_model,
-                load_in_4bit=shared.args.load_in_4bit,
-                load_in_low_bit=shared.args.load_in_low_bit,
-                optimize_model=shared.args.optimize_model,
-                trust_remote_code=shared.args.trust_remote_code,
-                use_cache=shared.args.use_cache,
-                )
+        path_to_model,
+        load_in_4bit=shared.args.load_in_4bit,
+        load_in_low_bit=shared.args.load_in_low_bit,
+        optimize_model=shared.args.optimize_model,
+        trust_remote_code=shared.args.trust_remote_code,
+        use_cache=shared.args.use_cache)
 
     tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
 
     return model, tokenizer
+
 
 def get_max_memory_dict():
     max_memory = {}
