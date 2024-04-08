@@ -99,8 +99,7 @@ def list_model_elements():
         'hqq_backend',
         'ipex_llm_load_in_4bit',
         'ipex_llm_load_in_low_bit',
-        'optimize_model',
-        'use_cache',
+        'optimize_model'
     ]
     if is_torch_xpu_available():
         for i in range(torch.xpu.device_count()):

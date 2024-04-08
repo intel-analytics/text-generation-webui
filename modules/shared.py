@@ -166,14 +166,10 @@ group.add_argument('--hqq-backend', type=str, default='PYTORCH_COMPILE', help='B
 
 # IPEX-LLM
 group = parser.add_argument_group('IPEX-LLM')
-group.add_argument('--load-in-4bit', action='store_true', default=False, help='boolean value, True means loading linear’s weight to symmetric int 4 if'\
-                   'the model is a regular fp16/bf16/fp32 model, and to asymmetric int 4 if the model is GPTQ model.Default to be False')
-group.add_argument('--load-in-low-bit', type=str, default=None, help='str value, options are sym_int4, asym_int4, sym_int5, asym_int5'\
-                   ', sym_int8, nf3, nf4, fp4, fp8, fp8_e4m3, fp8_e5m2, fp16 or bf16. sym_int4 means symmetric int 4, asym_int4 means asymmetric int 4,'\
-                   'nf4 means 4-bit NormalFloat, etc. Relevant low bit optimizations will be applied to the model.')
-group.add_argument('--optimize-model', action='store_true', default=True, help='boolean value, Whether to further optimize the low_bit llm model.')
-group.add_argument('--use-cache', action='store_true', default=True, help='If use_cache is True, past key values are used to speed up decoding if applicable to model.')
-group.add_argument('--trust-remote-code', action='store_true', default=True, help='Set trust_remote_code=True while loading the model. Necessary for some models.')
+group.add_argument('--load-in-4bit', action='store_true', help='Load the model to symmetric int4 precision if it is a regular fp16/bf16/fp32 model, and to asymmetric int4 precision if it is GPTQ model.')
+group.add_argument('--load-in-low-bit', type=str, default=None, help='Load the model to the specified low-bit precision. Supported options are sym_int4, fp4, fp8, asym_int4, sym_int5, asym_int5, sym_int8, mixed_fp4, mixed_fp8, nf3, nf4, fp8_e4m3, fp16 or bf16. asym_int4 means asymmetric int4, fp8 means 8-bit floating point, mixed_fp8 means mixture of 8-bit quantization, nf4 means 4-bit NormalFloat, etc.')
+group.add_argument('--optimize-model', action='store_true', help='Further optimize the low-bit model with ipex-llm.')
+group.add_argument('--trust-remote-code', action='store_true', help='Set trust_remote_code=True while loading the model. Necessary for some models.')
 
 # DeepSpeed
 group = parser.add_argument_group('DeepSpeed')

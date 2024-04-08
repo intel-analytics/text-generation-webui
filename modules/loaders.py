@@ -157,7 +157,6 @@ loaders_and_params = OrderedDict({
         'ipex_llm_load_in_low_bit',
         'optimize_model',
         'trust_remote_code',
-        'use_cache',
     ]
 })
 

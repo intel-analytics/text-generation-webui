@@ -319,9 +319,10 @@ List of command-line flags
 
 | Flag                                  | Description |
 |---------------------------------------|-------------|
-| `--load-in-4bit`   | Load the model with symmetric int4 precision. This option is mutually exclusive with `--load-in-low-bit`. |
-| `--load-in-low-bit PRECISION` | Load the model with specified precision. Supported options are sym_int4, asym_int4, sym_int5, asym_int5, sym_int8, nf3, nf4, fp4, fp8, fp8_e4m3, fp8_e5m2, fp16, and bf16. This option is mutually exclusive with `--load-in-4bit`.|
-
+| `--load-in-4bit`                      | Load the model to symmetric int4 precision. This option is mutually exclusive with `--load-in-low-bit`. |
+| `--load-in-low-bit PRECISION`         | Load the model to the specified low-bit precision. Supported options are `sym_int4`, `fp4`, `fp8`, `asym_int4`, `sym_int5`, `asym_int5`, `sym_int8`, `mixed_fp4`, `mixed_fp8`, `nf3`, `nf4`, `fp8_e4m3`, `fp16` and `bf16`. asym_int4 means asymmetric int4, fp8 means 8-bit floating point, mixed_fp8 means mixture of 8-bit quantization, nf4 means 4-bit NormalFloat, etc. This option is mutually exclusive with `--load-in-4bit`.|
+| `--optimize-model`                    | Further optimize the low-bit model with ipex-llm.
+| `--trust-remote-code`                 | Set `trust_remote_code=True` while loading the model. Necessary for some models. |
 
 #### DeepSpeed
 
