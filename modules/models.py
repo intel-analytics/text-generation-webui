@@ -416,7 +416,7 @@ def ipex_llm_loader(model_name):
         load_in_low_bit=shared.args.load_in_low_bit,
         optimize_model=shared.args.optimize_model,
         trust_remote_code=shared.args.trust_remote_code,
-        use_cache=shared.args.use_cache)
+        use_cache=True)
 
     tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
 
