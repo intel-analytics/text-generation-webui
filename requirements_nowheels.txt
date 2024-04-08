@@ -22,3 +22,5 @@ tensorboard
 transformers==4.38.*
 tqdm
 wandb
+py-cpuinfo
+ipex-llm

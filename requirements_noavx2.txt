@@ -22,6 +22,8 @@ tensorboard
 transformers==4.38.*
 tqdm
 wandb
+py-cpuinfo
+ipex-llm
 
 # bitsandbytes
 bitsandbytes==0.42.*; platform_system != "Windows"
