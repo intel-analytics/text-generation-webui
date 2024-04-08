@@ -153,10 +153,10 @@ loaders_and_params = OrderedDict({
         'no_use_fast',
     ],
     'IPEX-LLM': [
-        'ipex_llm_load_in_4bit',
-        'ipex_llm_load_in_low_bit',
+        'load_in_4bit',
+        'load_in_low_bit',
         'optimize_model',
-        'trust_remote_code',
+        'trust_remote_code'
     ]
 })
 

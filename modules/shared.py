@@ -108,7 +108,7 @@ group.add_argument('--use_flash_attention_2', action='store_true', help='Set use
 
 # bitsandbytes 4-bit
 group = parser.add_argument_group('bitsandbytes 4-bit')
-group.add_argument('--load-in-4bit', action='store_true', help='Load the model with 4-bit precision (using bitsandbytes).')
+group.add_argument('--load-in-4bit', action='store_true', help='Load the model with 4-bit precision (using bitsandbytes or ipex-llm).')
 group.add_argument('--use_double_quant', action='store_true', help='use_double_quant for 4-bit.')
 group.add_argument('--compute_dtype', type=str, default='float16', help='compute dtype for 4-bit. Valid options: bfloat16, float16, float32.')
 group.add_argument('--quant_type', type=str, default='nf4', help='quant_type for 4-bit. Valid options: nf4, fp4.')
@@ -166,7 +166,8 @@ group.add_argument('--hqq-backend', type=str, default='PYTORCH_COMPILE', help='B
 
 # IPEX-LLM
 group = parser.add_argument_group('IPEX-LLM')
-group.add_argument('--load-in-4bit', action='store_true', help='Load the model to symmetric int4 precision if it is a regular fp16/bf16/fp32 model, and to asymmetric int4 precision if it is GPTQ model.')
+# --load-in-4bit is the same as bitsandbytes 4-bit's argument
+# group.add_argument('--load-in-4bit', action='store_true', help='Load the model to symmetric int4 precision if it is a regular fp16/bf16/fp32 model, and to asymmetric int4 precision if it is GPTQ model.')
 group.add_argument('--load-in-low-bit', type=str, default=None, help='Load the model to the specified low-bit precision. Supported options are sym_int4, fp4, fp8, asym_int4, sym_int5, asym_int5, sym_int8, mixed_fp4, mixed_fp8, nf3, nf4, fp8_e4m3, fp16 or bf16. asym_int4 means asymmetric int4, fp8 means 8-bit floating point, mixed_fp8 means mixture of 8-bit quantization, nf4 means 4-bit NormalFloat, etc.')
 group.add_argument('--optimize-model', action='store_true', help='Further optimize the low-bit model with ipex-llm.')
 group.add_argument('--trust-remote-code', action='store_true', help='Set trust_remote_code=True while loading the model. Necessary for some models.')
