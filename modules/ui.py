@@ -35,7 +35,8 @@ theme = gr.themes.Default(
     border_color_primary='#c5c5d2',
     button_large_padding='6px 12px',
     body_text_color_subdued='#484848',
-    background_fill_secondary='#eaeaea'
+    background_fill_secondary='#eaeaea',
+    background_fill_primary='#fafafa',
 )
 
 if Path("notification.mp3").exists():
@@ -76,6 +77,7 @@ def list_model_elements():
         'no_flash_attn',
         'num_experts_per_token',
         'cache_8bit',
+        'cache_4bit',
         'autosplit',
         'threads',
         'threads_batch',
@@ -96,6 +98,8 @@ def list_model_elements():
         'no_offload_kqv',
         'row_split',
         'tensorcores',
+        'streaming_llm',
+        'attention_sink_size',
         'hqq_backend',
         'load_in_low_bit',
         'optimize_model'
@@ -115,7 +119,6 @@ def list_interface_input_elements():
         'max_new_tokens',
         'auto_max_new_tokens',
         'max_tokens_second',
-        'max_updates_second',
         'prompt_lookup_num_tokens',
         'seed',
         'temperature',
@@ -138,12 +141,8 @@ def list_interface_input_elements():
         'repetition_penalty_range',
         'encoder_repetition_penalty',
         'no_repeat_ngram_size',
-        'min_length',
         'do_sample',
         'penalty_alpha',
-        'num_beams',
-        'length_penalty',
-        'early_stopping',
         'mirostat_mode',
         'mirostat_tau',
         'mirostat_eta',
@@ -169,6 +168,7 @@ def list_interface_input_elements():
         'character_menu',
         'history',
         'name1',
+        'user_bio',
         'name2',
         'greeting',
         'context',
@@ -219,7 +219,7 @@ def apply_interface_values(state, use_persistent=False):
 
 def save_settings(state, preset, extensions_list, show_controls, theme_state):
     output = copy.deepcopy(shared.settings)
-    exclude = ['name2', 'greeting', 'context', 'turn_template']
+    exclude = ['name2', 'greeting', 'context', 'turn_template', 'truncation_length']
     for k in state:
         if k in shared.settings and k not in exclude:
             output[k] = state[k]
