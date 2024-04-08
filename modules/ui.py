@@ -97,8 +97,7 @@ def list_model_elements():
         'row_split',
         'tensorcores',
         'hqq_backend',
-        'ipex_llm_load_in_4bit',
-        'ipex_llm_load_in_low_bit',
+        'load_in_low_bit',
         'optimize_model'
     ]
     if is_torch_xpu_available():
