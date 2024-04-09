@@ -397,8 +397,7 @@ def ipex_llm_loader(model_name):
     model = LoaderClass.from_pretrained(
         path_to_model,
         load_in_4bit=shared.args.load_in_4bit,
-        load_in_low_bit=shared.args.load_in_low_bit,
-        optimize_model=shared.args.optimize_model,
+        optimize_model=True,
         trust_remote_code=shared.args.trust_remote_code,
         use_cache=True)
 

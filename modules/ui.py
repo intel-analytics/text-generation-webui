@@ -101,8 +101,6 @@ def list_model_elements():
         'streaming_llm',
         'attention_sink_size',
         'hqq_backend',
-        'load_in_low_bit',
-        'optimize_model'
     ]
     if is_torch_xpu_available():
         for i in range(torch.xpu.device_count()):
