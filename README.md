@@ -314,6 +314,13 @@ List of command-line flags
 |-------------|-------------|
 | `--hqq-backend` | Backend for the HQQ loader. Valid options: PYTORCH, PYTORCH_COMPILE, ATEN. |
 
+#### IPEX-LLM
+
+| Flag                                  | Description |
+|---------------------------------------|-------------|
+| `--load-in-4bit`                      | Load the model to symmetric int4 precision with ipex-llm optimizations. |
+| `--trust-remote-code`                 | Set `trust_remote_code=True` while loading the model. Necessary for some models. |
+
 #### DeepSpeed
 
 | Flag                                  | Description |

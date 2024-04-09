@@ -26,6 +26,8 @@ tensorboard
 transformers==4.39.*
 tqdm
 wandb
+py-cpuinfo
+ipex-llm
 
 # API
 SpeechRecognition==3.10.0

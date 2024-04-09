@@ -132,6 +132,8 @@ def encode(prompt, add_special_tokens=True, add_bos_token=True, truncation_lengt
         return input_ids
     elif shared.args.deepspeed:
         return input_ids.to(device=local_rank)
+    elif shared.args.loader == 'IPEX-LLM':
+        return input_ids
     elif torch.backends.mps.is_available():
         device = torch.device('mps')
         return input_ids.to(device)

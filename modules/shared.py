@@ -106,7 +106,7 @@ group.add_argument('--use_flash_attention_2', action='store_true', help='Set use
 
 # bitsandbytes 4-bit
 group = parser.add_argument_group('bitsandbytes 4-bit')
-group.add_argument('--load-in-4bit', action='store_true', help='Load the model with 4-bit precision (using bitsandbytes).')
+group.add_argument('--load-in-4bit', action='store_true', help='Load the model with 4-bit precision (using bitsandbytes or ipex-llm).')
 group.add_argument('--use_double_quant', action='store_true', help='use_double_quant for 4-bit.')
 group.add_argument('--compute_dtype', type=str, default='float16', help='compute dtype for 4-bit. Valid options: bfloat16, float16, float32.')
 group.add_argument('--quant_type', type=str, default='nf4', help='quant_type for 4-bit. Valid options: nf4, fp4.')
@@ -164,6 +164,10 @@ group.add_argument('--monkey-patch', action='store_true', help='Apply the monkey
 # HQQ
 group = parser.add_argument_group('HQQ')
 group.add_argument('--hqq-backend', type=str, default='PYTORCH_COMPILE', help='Backend for the HQQ loader. Valid options: PYTORCH, PYTORCH_COMPILE, ATEN.')
+
+# IPEX-LLM
+# --load-in-4bit is the same as bitsandbytes 4-bit
+# --trust-remote-code is the same as Transformers
 
 # DeepSpeed
 group = parser.add_argument_group('DeepSpeed')
@@ -263,6 +267,8 @@ def fix_loader_name(name):
         return 'QuIP#'
     elif name in ['hqq']:
         return 'HQQ'
+    elif name in ['IPEX-LLM', 'ipex-llm']:
+        return 'IPEX-LLM'
 
 
 def add_extension(name, last=False):

@@ -148,6 +148,10 @@ loaders_and_params = OrderedDict({
         'hqq_backend',
         'trust_remote_code',
         'no_use_fast',
+    ],
+    'IPEX-LLM': [
+        'load_in_4bit',
+        'trust_remote_code',
     ]
 })
 
@@ -203,6 +207,7 @@ loaders_samplers = {
     'AutoAWQ': transformers_samplers(),
     'QuIP#': transformers_samplers(),
     'HQQ': transformers_samplers(),
+    'IPEX-LLM': transformers_samplers(),
     'ExLlamav2': {
         'temperature',
         'temperature_last',

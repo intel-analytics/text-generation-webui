@@ -71,6 +71,7 @@ def load_model(model_name, loader=None):
         'AutoAWQ': AutoAWQ_loader,
         'QuIP#': QuipSharp_loader,
         'HQQ': HQQ_loader,
+        'IPEX-LLM': ipex_llm_loader,
     }
 
     metadata = get_model_metadata(model_name)
@@ -374,6 +375,35 @@ def HQQ_loader(model_name):
     model = HQQModelForCausalLM.from_quantized(str(model_dir))
     HQQLinear.set_backend(getattr(HQQBackend, shared.args.hqq_backend))
     return model
+
+
+def ipex_llm_loader(model_name):
+
+    from ipex_llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
+
+    path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
+
+    config = AutoConfig.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
+
+    if 'chatglm' in model_name.lower():
+        LoaderClass = AutoModel
+    else:
+        if config.to_dict().get('is_encoder_decoder', False):
+            LoaderClass = AutoModelForSeq2SeqLM
+            shared.is_seq2seq = True
+        else:
+            LoaderClass = AutoModelForCausalLM
+
+    model = LoaderClass.from_pretrained(
+        path_to_model,
+        load_in_4bit=shared.args.load_in_4bit,
+        optimize_model=True,
+        trust_remote_code=shared.args.trust_remote_code,
+        use_cache=True)
+
+    tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
+
+    return model, tokenizer
 
 
 def get_max_memory_dict():
