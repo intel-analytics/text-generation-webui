@@ -78,7 +78,6 @@ def _generate_reply(question, state, stopping_strings=None, is_chat=False, escap
     is_stream = state['stream']
     if len(all_stop_strings) > 0 and not state['stream']:
         state = copy.deepcopy(state)
-        state['stream'] = True
 
     min_update_interval = 0
     if state.get('max_updates_second', 0) > 0:
@@ -375,6 +374,10 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(filtered_params)
         print()
 
+    if shared.args.device == "GPU":
+        import intel_extension_for_pytorch
+        shared.model = shared.model.to("xpu")
+
     t0 = time.time()
     try:
         if not is_chat and not shared.is_seq2seq:
@@ -384,8 +387,6 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         if not state['stream']:
             with torch.no_grad():
                 output = shared.model.generate(**generate_params)[0]
-                if cuda:
-                    output = output.cuda()
 
             starting_from = 0 if shared.is_seq2seq else len(input_ids[0])
             yield get_reply_from_output_ids(output, state, starting_from=starting_from)
