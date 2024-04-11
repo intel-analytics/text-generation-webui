@@ -88,7 +88,7 @@ def create_interface():
 
     # Force some events to be triggered on page load
     shared.persistent_interface_state.update({
-        'loader': shared.args.loader or 'BigDL-LLM',
+        'loader': shared.args.loader or 'IPEX-LLM',
         'mode': shared.settings['mode'],
         'character_menu': shared.args.character or shared.settings['character'],
         'instruction_template_str': shared.settings['instruction_template_str'],

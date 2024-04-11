@@ -1,28 +1,28 @@
-***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [BigDL-LLM](https://github.com/intel-analytics/bigdl).***
+***The WebUI is ported from [Text-Generation-WebUI](https://github.com/oobabooga/text-generation-webui) for running local LLM on Intel GPU (e.g., local PC with iGPU, discrete GPU such as Arc, Flex and Max) using [IPEX-LLM](https://github.com/intel-analytics/ipex-llm).***
 
 ## Quick Start
-To get started, please see the step-by-step [quickstart](https://bigdl.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html).
+To get started, please see the step-by-step [quickstart](https://ipex-llm.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html).
 
-[<img src="https://llm-assets.readthedocs.io/en/latest/_images/webui_quickstart_chat.png" height="480px">](https://bigdl.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html)
+[<img src="https://llm-assets.readthedocs.io/en/latest/_images/webui_quickstart_chat.png" height="480px">](https://ipex-llm.readthedocs.io/en/latest/doc/LLM/Quickstart/webui_quickstart.html)
 
 ## User Guide
 For more information, see the user guide below.
 
 ### 1. Download and Unzip WebUI
 
-Before starting all the steps, you need to download and unzip the text-generation-webui based on `BigDL-LLM` optimizations.
+Before starting all the steps, you need to download and unzip the text-generation-webui based on `IPEX-LLM` optimizations.
 
 ```bash
-https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/bigdl-llm.zip
+https://github.com/intel-analytics/text-generation-webui/archive/refs/heads/ipex-llm.zip
 ```
 
 ### 2. Prepare the Environment on Windows
 
 Please use a python environment management tool (we recommend using Conda) to create a python enviroment and install necessary libs.
 
-#### 2.1 Install BigDL-LLM
+#### 2.1 Install IPEX-LLM
 
-Please see [BigDL-LLm Installation on Windows](https://bigdl.readthedocs.io/en/latest/doc/LLM/Overview/install_gpu.html#windows) for more details to install BigDL-LLM on your Client.
+Please see [IPEX-LLM Installation on Windows](https://ipex-llm.readthedocs.io/en/latest/doc/LLM/Overview/install_gpu.html#windows) for more details to install IPEX-LLM on your Client.
 
 #### 2.2 Install Other Required Dependencies
 
@@ -67,28 +67,28 @@ This share link expires in 72 hours. For free permanent hosting and GPU upgrades
 ##### 4.1.1 Download the Model
 If you need to download a model, enter the Hugging Face username or model path, for instance: `Qwen/Qwen-7B-Chat`.
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image.png)
+![Image text](./readme_folder/image.png)
 
 ##### 4.1.2 Place the Model
 After you have downloaded the model (or if you already have the model locally), please place the model in `Text-Generation-WebUI/models` directory.
 
 After completing the two steps above, you may click the `Model` button to select your model.
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image1.png)
+![Image text](./readme_folder/image1.png)
 
 
-#### 4.2 Enable BigDL-LLM Optimizations
-Text-Generation-WebUI supports multiple backends, including `BigDL-LLM`, `Transformers`, `llama.cpp`, etc (the default backend is `BigDL-LLM`). You may select the BigDL-LLM backend as below to enable low-bit optimizations.
+#### 4.2 Enable IPEX-LLM Optimizations
+Text-Generation-WebUI supports multiple backends, including `IPEX-LLM`, `Transformers`, `llama.cpp`, etc (the default backend is `IPEX-LLM`). You may select the IPEX-LLM backend as below to enable low-bit optimizations.
 
 
 Then please select the device according to your device (the default device is `GPU`).
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image2.png)
+![Image text](./readme_folder/image2.png)
 
 
 #### 4.3 Load Model in Low Precision 
 
-One common use case of BigDL-LLM is to load a Hugging Face transformers model in low precision.
+One common use case of IPEX-LLM is to load a Hugging Face transformers model in low precision.
 
 Notes:
 
@@ -99,14 +99,14 @@ Notes:
 -  Please select the `optimize-model` and `use_cache` options to accelerate the model.
 
 
-Now you may click the `Load` button to load the model with BigDL-LLM optimizations.
+Now you may click the `Load` button to load the model with IPEX-LLM optimizations. If everything goes well, you will get a message as shown below.
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image3.png)
+![Image text](./readme_folder/image3.png)
 
 
 ##### 4.4 Run the Model on WebUI
 
-After completing the steps of model preparation, enabling BigDL-LLM optimizations, and loading model, you may need to sepecify parameters in the `Parameters tab` according to the needs of your task.
+After completing the steps of model preparation, enabling IPEX-LLM optimizations, and loading model, you may need to sepecify parameters in the `Parameters tab` according to the needs of your task.
 
 Notes:
 * `max_new_tokens`: Maximum number of tokens to generate.
@@ -115,7 +115,7 @@ Notes:
 
 * Please see [Parameters-Tab Wiki](https://github.com/oobabooga/text-generation-webui/wiki/03-%E2%80%90-Parameters-Tab) for more details.
 
-Now you may do model inference on Text-Generation-WebUI with BigDL-LLM optimizations, including `Chat`, `Default` and `Notebook` Tabs.
+Now you may do model inference on Text-Generation-WebUI with IPEX-LLM optimizations, including `Chat`, `Default` and `Notebook` Tabs.
 
 ##### 4.4.1 Chat Tab
 
@@ -128,7 +128,7 @@ Notes:
 
 * Please see [Chat-Tab Wiki](https://github.com/oobabooga/text-generation-webui/wiki/01-%E2%80%90-Chat-Tab) for more details.
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image4.png)
+![Image text](./readme_folder/image4.png)
 
 ##### 4.4.2 Default Tab
 
@@ -138,7 +138,7 @@ This tab contains two main text boxes: Input, where you enter your prompt, and O
 
 Please see [Default-Tab Wiki](https://github.com/oobabooga/text-generation-webui/wiki/02-%E2%80%90-Default-and-Notebook-Tabs#default-tab) for more details.
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image5.png)
+![Image text](./readme_folder/image5.png)
 
 
 ##### 4.4.3 Notebook Tab
@@ -147,4 +147,4 @@ You may use the `Notebook tab` to do exactly what the `Default tab` does, with t
 
 Please see [Notebook-Tab Wiki](https://github.com/oobabooga/text-generation-webui/wiki/02-%E2%80%90-Default-and-Notebook-Tabs#notebook-tab) for more details.
 
-![Image text](https://github.com/intel-analytics/text-generation-webui/blob/8ebee0651dd56012c4a9e0ba6932efec4c7d1b2e/readme_folder/image6.png)
+![Image text](./readme_folder/image6.png)
