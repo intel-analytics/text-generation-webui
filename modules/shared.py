@@ -1,4 +1,5 @@
 import argparse
+import copy
 import os
 import sys
 from collections import OrderedDict
@@ -65,6 +66,7 @@ settings = {
     'default_extensions': ['gallery'],
 }
 
+default_settings = copy.deepcopy(settings)
 
 # Parser copied from https://github.com/vladmandic/automatic
 parser = argparse.ArgumentParser(description="Text generation web UI", conflict_handler='resolve', add_help=True, formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=55, indent_increment=2, width=200))
@@ -155,8 +157,8 @@ group.add_argument('--pre_layer', type=int, nargs='+', help='The number of layer
 group.add_argument('--checkpoint', type=str, help='The path to the quantized checkpoint file. If not specified, it will be automatically detected.')
 group.add_argument('--monkey-patch', action='store_true', help='Apply the monkey patch for using LoRAs with quantized models.')
 
-# BigDL-LLM
-group = parser.add_argument_group('BigDL-LLM')
+# IPEX-LLM
+group = parser.add_argument_group('IPEX-LLM')
 group.add_argument('--device', type=str, default='GPU', help='the device type, it could be CPU or GPU')
 group.add_argument('--load-in-4bit', action='store_true', default=False, help='boolean value, True means loading linear’s weight to symmetric int 4 if'\
                    'the model is a regular fp16/bf16/fp32 model, and to asymmetric int 4 if the model is GPTQ model.Default to be False')
@@ -165,8 +167,8 @@ group.add_argument('--load-in-low-bit', type=str, default=None, help='str value,
                    'nf4 means 4-bit NormalFloat, etc. Relevant low bit optimizations will be applied to the model.')
 group.add_argument('--optimize-model', action='store_true', default=True, help='boolean value, Whether to further optimize the low_bit llm model.')
 #group.add_argument('--modules-to-not-convert', type=str, default=None, help='list of str value, modules (nn.Module) that are skipped when conducting model optimizations.')
-group.add_argument('--cpu-embedding', action='store_true', default=True, help='Whether to replace the Embedding layer, may need to set it to `True` when running BigDL-LLM on GPU on Windows. Default to be `False`')
-#group.add_argument('--lightweight-bmm', action='store_true', help='Whether to replace the torch.bmm ops, may need to set it to `True` when running BigDL-LLM on GPU on Windows.')
+group.add_argument('--cpu-embedding', action='store_true', default=True, help='Whether to replace the Embedding layer, may need to set it to `True` when running IPEX-LLM on GPU on Windows. Default to be `False`')
+#group.add_argument('--lightweight-bmm', action='store_true', help='Whether to replace the torch.bmm ops, may need to set it to `True` when running IPEX-LLM on GPU on Windows.')
 group.add_argument('--use-cache', action='store_true', default=True, help='If use_cache is True, past key values are used to speed up decoding if applicable to model.')
 group.add_argument('--trust-remote-code', action='store_true', default=True, help='Set trust_remote_code=True while loading the model. Necessary for some models.')
 
@@ -274,8 +276,8 @@ def fix_loader_name(name):
         return 'QuIP#'
     elif name in ['hqq']:
         return 'HQQ'
-    elif name in ['BigDL-LLM', 'bigdl-llm', 'bigdl']:
-        return 'BigDL-LLM'
+    elif name in ['IPEX-LLM', 'ipex-llm']:
+        return 'IPEX-LLM'
 
 
 def add_extension(name, last=False):

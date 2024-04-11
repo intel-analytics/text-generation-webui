@@ -162,7 +162,7 @@ def infer_loader(model_name, model_settings):
     elif re.match(r'.*-hqq', model_name.lower()):
         return 'HQQ'
     else:
-        loader = 'BigDL-LLM'
+        loader = 'IPEX-LLM'
 
     return loader
 
