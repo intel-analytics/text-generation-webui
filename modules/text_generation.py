@@ -78,7 +78,6 @@ def _generate_reply(question, state, stopping_strings=None, is_chat=False, escap
     is_stream = state['stream']
     if len(all_stop_strings) > 0 and not state['stream']:
         state = copy.deepcopy(state)
-        state['stream'] = True
 
     min_update_interval = 0
     if state.get('max_updates_second', 0) > 0:
@@ -374,6 +373,10 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         filtered_params = {key: value for key, value in generate_params.items() if not isinstance(value, torch.Tensor)}
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(filtered_params)
         print()
+
+    if shared.args.device == "GPU":
+        import intel_extension_for_pytorch
+        shared.model = shared.model.to("xpu")
 
     t0 = time.time()
     try:
