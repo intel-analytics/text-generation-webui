@@ -387,8 +387,6 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         if not state['stream']:
             with torch.no_grad():
                 output = shared.model.generate(**generate_params)[0]
-                if cuda:
-                    output = output.cuda()
 
             starting_from = 0 if shared.is_seq2seq else len(input_ids[0])
             yield get_reply_from_output_ids(output, state, starting_from=starting_from)
