@@ -60,7 +60,7 @@ def load_model(model_name, loader=None):
     shared.is_seq2seq = False
     shared.model_name = model_name
     load_func_map = {
-        'BigDL-LLM': bigdl_llm_loader,
+        'IPEX-LLM': ipex_llm_loader,
         'Transformers': huggingface_loader,
         'AutoGPTQ': AutoGPTQ_loader,
         'GPTQ-for-LLaMa': GPTQ_loader,
@@ -321,9 +321,9 @@ def AutoAWQ_loader(model_name):
 
     return model
 
-def bigdl_llm_loader(model_name):
+def ipex_llm_loader(model_name):
 
-    from bigdl.llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
+    from ipex_llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
 
     path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
 
@@ -349,10 +349,6 @@ def bigdl_llm_loader(model_name):
                 trust_remote_code=shared.args.trust_remote_code,
                 use_cache=shared.args.use_cache,
                 )
-
-    if shared.args.device == "GPU":
-        import intel_extension_for_pytorch
-        model = model.to("xpu")
 
     tokenizer = AutoTokenizer.from_pretrained(path_to_model, trust_remote_code=shared.args.trust_remote_code)
 
