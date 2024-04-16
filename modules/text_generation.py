@@ -9,8 +9,10 @@ import traceback
 
 import numpy as np
 import torch
+from tqdm import tqdm
 import transformers
 from transformers import LogitsProcessorList, is_torch_xpu_available
+from transformers.generation import TextIteratorStreamer
 
 import modules.shared as shared
 from modules.callbacks import (
@@ -78,7 +80,6 @@ def _generate_reply(question, state, stopping_strings=None, is_chat=False, escap
     is_stream = state['stream']
     if len(all_stop_strings) > 0 and not state['stream']:
         state = copy.deepcopy(state)
-        state['stream'] = True
 
     min_update_interval = 0
     if state.get('max_updates_second', 0) > 0:
@@ -375,6 +376,12 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(filtered_params)
         print()
 
+    if shared.args.device == "GPU":
+        import intel_extension_for_pytorch
+        shared.model = shared.model.to("xpu")
+
+    streamer = TextIteratorStreamer(shared.tokenizer, skip_prompt=True)
+
     t0 = time.time()
     try:
         if not is_chat and not shared.is_seq2seq:
@@ -384,47 +391,35 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         if not state['stream']:
             with torch.no_grad():
                 output = shared.model.generate(**generate_params)[0]
-                if cuda:
-                    output = output.cuda()
 
             starting_from = 0 if shared.is_seq2seq else len(input_ids[0])
             yield get_reply_from_output_ids(output, state, starting_from=starting_from)
 
+            output_tokens = len(output)
+
         # Stream the reply 1 token at a time.
         # This is based on the trick of using 'stopping_criteria' to create an iterator.
         else:
+            with torch.no_grad():
+                output = shared.model.generate(**generate_params, streamer=streamer)
+    
+        cumulative_reply = ''
+            for new_content in tqdm(streamer, "Generating Tokens", unit="token"):
+                # check the partial unicode character
+                if chr(0xfffd) in new_content:
+                    continue
 
-            def generate_with_callback(callback=None, *args, **kwargs):
-                kwargs['stopping_criteria'].append(Stream(callback_func=callback))
-                clear_torch_cache()
-                with torch.no_grad():
-                    shared.model.generate(**kwargs)
+                cumulative_reply += new_content
+                yield cumulative_reply
 
-            def generate_with_streaming(**kwargs):
-                return Iteratorize(generate_with_callback, [], kwargs, callback=None)
-
-            with generate_with_streaming(**generate_params) as generator:
-                cumulative_reply = ''
-                starting_from = 0 if shared.is_seq2seq else len(input_ids[0])
-                for output in generator:
-                    if output[-1] in eos_token_ids:
-                        break
-
-                    new_content = get_reply_from_output_ids(output, state, starting_from=starting_from)
-                    # check the partial unicode character
-                    if chr(0xfffd) in new_content:
-                        continue
-
-                    cumulative_reply += new_content
-                    starting_from = len(output)
-                    yield cumulative_reply
+            output_tokens = output.shape[1]
 
     except Exception:
         traceback.print_exc()
     finally:
         t1 = time.time()
         original_tokens = len(original_input_ids[0])
-        new_tokens = len(output) - (original_tokens if not shared.is_seq2seq else 0)
+        new_tokens = output_tokens - (original_tokens if not shared.is_seq2seq else 0)
         print(f'Output generated in {(t1-t0):.2f} seconds ({new_tokens/(t1-t0):.2f} tokens/s, {new_tokens} tokens, context {original_tokens}, seed {seed})')
         return
 
