@@ -403,7 +403,7 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
             with torch.no_grad():
                 output = shared.model.generate(**generate_params, streamer=streamer)
     
-        cumulative_reply = ''
+            cumulative_reply = ''
             for new_content in tqdm(streamer, "Generating Tokens", unit="token"):
                 # check the partial unicode character
                 if chr(0xfffd) in new_content:
