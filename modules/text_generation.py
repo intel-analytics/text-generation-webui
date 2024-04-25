@@ -10,6 +10,7 @@ import traceback
 import numpy as np
 import torch
 from tqdm import tqdm
+from threading import Thread
 import transformers
 from transformers import LogitsProcessorList, is_torch_xpu_available
 from transformers.generation import TextIteratorStreamer
@@ -400,9 +401,11 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         # Stream the reply 1 token at a time.
         # This is based on the trick of using 'stopping_criteria' to create an iterator.
         else:
-            with torch.no_grad():
-                output = shared.model.generate(**generate_params, streamer=streamer)
-    
+            generation_kwargs = {**generate_params, "streamer": streamer}
+
+            thread = Thread(target=shared.model.generate, kwargs=generation_kwargs)
+            thread.start()
+            
             cumulative_reply = ''
             for new_content in tqdm(streamer, "Generating Tokens", unit="token"):
                 # check the partial unicode character
@@ -412,15 +415,14 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
                 cumulative_reply += new_content
                 yield cumulative_reply
 
-            output_tokens = output.shape[1]
-
     except Exception:
         traceback.print_exc()
     finally:
         t1 = time.time()
         original_tokens = len(original_input_ids[0])
-        new_tokens = output_tokens - (original_tokens if not shared.is_seq2seq else 0)
-        print(f'Output generated in {(t1-t0):.2f} seconds ({new_tokens/(t1-t0):.2f} tokens/s, {new_tokens} tokens, context {original_tokens}, seed {seed})')
+        if not state['stream']:
+            new_tokens = output_tokens - (original_tokens if not shared.is_seq2seq else 0)
+            print(f'Output generated in {(t1-t0):.2f} seconds ({new_tokens/(t1-t0):.2f} tokens/s, {new_tokens} tokens, context {original_tokens}, seed {seed})')
         return
 
 
