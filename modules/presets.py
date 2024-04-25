@@ -31,7 +31,7 @@ def default_preset():
         'mirostat_mode': 0,
         'mirostat_tau': 5,
         'mirostat_eta': 0.1,
-        'do_sample': True,
+        'do_sample': False,
         'encoder_repetition_penalty': 1,
         'no_repeat_ngram_size': 0,
         'min_length': 0,
