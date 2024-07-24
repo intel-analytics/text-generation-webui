@@ -26,6 +26,8 @@ from modules.logging_colors import logger
 from modules.models_settings import get_model_metadata
 from modules.relative_imports import RelativeImport
 
+from ipex_llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
+
 transformers.logging.set_verbosity_error()
 
 local_rank = None
@@ -322,8 +324,6 @@ def AutoAWQ_loader(model_name):
     return model
 
 def ipex_llm_loader(model_name):
-
-    from ipex_llm.transformers import AutoModelForCausalLM, AutoModel, AutoModelForSeq2SeqLM
 
     path_to_model = Path(f'{shared.args.model_dir}/{model_name}')
 

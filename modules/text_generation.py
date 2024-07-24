@@ -377,6 +377,10 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         pprint.PrettyPrinter(indent=4, sort_dicts=False).pprint(filtered_params)
         print()
 
+    if shared.args.device == "GPU":
+        import intel_extension_for_pytorch
+        shared.model = shared.model.to("xpu")
+
     streamer = TextIteratorStreamer(shared.tokenizer, skip_prompt=True)
 
     t0 = time.time()
